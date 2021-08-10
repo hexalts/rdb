@@ -1,5 +1,7 @@
 # Hexalts Realtime Database (server side)
 
+> To use the RDB Client Side, please refer to [this](https://github.com/hexalts/rdbc) link.
+
 ## Requirements
 
 - MongoDB with replica set or sharded cluster enabled. [See here](https://docs.mongodb.com/manual/changeStreams/#availability).
