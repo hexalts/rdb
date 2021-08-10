@@ -42,6 +42,7 @@ module.exports = {
         DB_PASSWORD: 'change with your configuration',
         DB_PROTOCOL: 'change with your configuration',
         DB_ARGS: 'change with your configuration',
+        INSTANCE_ID: 'random UUIDv4'
       },
     },
   ],
