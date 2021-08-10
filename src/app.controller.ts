@@ -59,8 +59,6 @@ export class AppController {
     @Ctx() context: MqttContext,
     @Payload() payload: PayloadProps,
   ) {
-    console.log(context.getTopic());
-    console.log(payload);
     if (payload.type === 'reply') {
       this.end(context.getTopic(), payload.operation);
     }

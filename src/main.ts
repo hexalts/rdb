@@ -7,13 +7,6 @@ async function bootstrap() {
   const port = parseInt(process.env.BROKER_PORT);
   const username = process.env.BROKER_USERNAME;
   const password = process.env.BROKER_PASSWORD;
-  console.log({
-    hostname: hostname,
-    port: port,
-    protocol: 'wss',
-    username: username,
-    password: password,
-  })
   const app = await NestFactory.createMicroservice<MicroserviceOptions>(
     AppModule,
     {
