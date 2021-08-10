@@ -26,10 +26,11 @@ export class AppService {
     try {
       await this.mongo.connect();
       Logger.log('Connection initialized', 'MongoDB');
+      Logger.log(process.env.INSTANCE_ID, 'InstanceId')
       this.mongo
         .watch([], { fullDocument: 'updateLookup' })
         .on('change', (change) => {
-          const topic = `stream/${change.ns.db}/${
+          const topic = `${process.env.INSTANCE_ID}/stream/${change.ns.db}/${
             change.ns.coll
           }/${Date.now()}`;
           const payload: PayloadProps = {

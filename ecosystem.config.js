@@ -14,6 +14,7 @@ module.exports = {
         DB_PASSWORD: '',
         DB_PROTOCOL: 'mongodb',
         DB_ARGS: 'authSource=admin&readPreference=primary&appname=RDB%20Hexalts&directConnection=true&ssl=false',
+        INSTANCE_ID: '',
       },
     },
   ],

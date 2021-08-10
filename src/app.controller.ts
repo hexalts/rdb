@@ -54,7 +54,7 @@ export class AppController {
       operation: operation,
     });
   }
-  @EventPattern('payload/#')
+  @EventPattern(`${process.env.INSTANCE_ID}/payload/#`)
   async eventProcessor(
     @Ctx() context: MqttContext,
     @Payload() payload: PayloadProps,
@@ -63,18 +63,18 @@ export class AppController {
       this.end(context.getTopic(), payload.operation);
     }
   }
-  @MessagePattern('request/#')
+  @MessagePattern(`${process.env.INSTANCE_ID}/request/#`)
   async requestProcessor(
     @Ctx() context: MqttContext,
     @Payload() payload: PayloadProps,
   ) {
     try {
       const topic = context.getTopic().split('/');
-      if (topic.length === 4) {
-        const database = topic[1];
-        const collection = topic[2];
-        const requestId = topic[3];
-        const responseTopic = `payload/${database}/${collection}/${requestId}`;
+      if (topic.length === 5) {
+        const database = topic[2];
+        const collection = topic[3];
+        const requestId = topic[4];
+        const responseTopic = `${process.env.INSTANCE_ID}/payload/${database}/${collection}/${requestId}`;
         const target = this.appService.mongo
           .db(database)
           .collection(collection);
@@ -104,14 +104,15 @@ export class AppController {
             case 'create':
               target.insertOne(payload.payload, (error, result) => {
                 if (!error) {
-                  this.appService.client
-                    .emit<string, PayloadProps>(responseTopic, {
+                  this.appService.client.emit<string, PayloadProps>(
+                    responseTopic,
+                    {
                       type: 'reply',
                       query: payload.query,
                       payload: [result],
                       operation: payload.operation,
-                    })
-                    .subscribe((a) => a);
+                    },
+                  );
                 } else {
                   this.appService.client.emit<string, PayloadProps>(
                     responseTopic,
@@ -199,7 +200,7 @@ export class AppController {
       }
     } catch (e) {
       const topic = context.getTopic().split('/');
-      const responseTopic = `payload/${topic.slice(1).join('/')}`;
+      const responseTopic = `${process.env.INSTANCE_ID}/payload/${topic.slice(1).join('/')}`;
       this.appService.client.emit<string, PayloadProps>(responseTopic, {
         type: 'error',
         query: [],
