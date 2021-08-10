@@ -42,12 +42,14 @@ module.exports = {
         DB_PASSWORD: 'change with your configuration',
         DB_PROTOCOL: 'change with your configuration',
         DB_ARGS: 'change with your configuration',
-        INSTANCE_ID: 'random UUIDv4'
+        INSTANCE_ID: 'Random UUIDv4',
       },
     },
   ],
 };
 ```
+
+> You can try to generate an UUID v4 on [this page](https://www.uuidgenerator.net/version4), and make sure the client knows your instanceId. Otherwise, they cannot communicate with your RDB Server.
 
 Start the RDB server via PM2
 
