@@ -1,3 +1,5 @@
+[![CodeQL](https://github.com/hexalts/rdb/actions/workflows/codeql.yml/badge.svg)](https://github.com/hexalts/rdb/actions/workflows/codeql.yml)
+
 # Hexalts Realtime Database (server side)
 
 > To use the RDB Client Side, please refer to [this](https://github.com/hexalts/rdbc) link.
