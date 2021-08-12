@@ -1,3 +1,4 @@
+[![OSSAR](https://github.com/hexalts/rdb/actions/workflows/ossar.yml/badge.svg)](https://github.com/hexalts/rdb/actions/workflows/ossar.yml)
 [![CodeQL](https://github.com/hexalts/rdb/actions/workflows/codeql.yml/badge.svg)](https://github.com/hexalts/rdb/actions/workflows/codeql.yml)
 
 # Hexalts Realtime Database (server side)
