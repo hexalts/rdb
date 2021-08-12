@@ -136,7 +136,7 @@ export class AppController {
               });
               break;
             case 'update':
-              target.updateOne(
+              target.updateMany(
                 query,
                 { $set: payload.payload },
                 (error, result) => {
