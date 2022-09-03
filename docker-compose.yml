@@ -1,0 +1,70 @@
+version: '3.6'
+services:
+  mosquitto:
+    image: eclipse-mosquitto
+    container_name: communicator
+    volumes:
+      - ./config:/mosquitto/config/:rw
+    ports:
+      - 1883:1883
+      - 9001:9001
+
+  router:
+    image: mongo:6.0.1
+    container_name: router
+    command: mongos --port 27017 --configdb rs-config-server/shard-server:27017 --bind_ip_all
+    ports:
+      - 27017:27017
+    volumes:
+      - ./scripts:/scripts
+      - ./data/mongodb/router/db:/data/db:rw
+      - ./data/mongodb/router/configdb:/data/configdb:rw
+
+  ## Config Server
+  shard-server:
+    image: mongo:6.0.1
+    container_name: shard-server
+    command: mongod --port 27017 --configsvr --replSet rs-config-server
+    volumes:
+      - ./scripts:/scripts
+      - ./data/mongodb/shard-server/db:/data/db:rw
+      - ./data/mongodb/shard-server/configdb:/data/configdb:rw
+    ports:
+      - 27119:27017
+    links:
+      - node-a
+
+  # Shards
+  node-a:
+    image: mongo:6.0.1
+    container_name: node-a
+    command: mongod --port 27017 --shardsvr --replSet rs-shard-1
+    volumes:
+      - ./scripts:/scripts
+      - ./data/mongodb/node-a/db:/data/db:rw
+      - ./data/mongodb/node-a/configdb:/data/configdb:rw
+    ports:
+      - 27122:27017
+    links:
+      - node-b
+      - node-c
+  node-b:
+    image: mongo:6.0.1
+    container_name: node-b
+    command: mongod --port 27017 --shardsvr --replSet rs-shard-1
+    volumes:
+      - ./scripts:/scripts
+      - ./data/mongodb/node-b/db:/data/db:rw
+      - ./data/mongodb/node-b/configdb:/data/configdb:rw
+    ports:
+      - 27123:27017
+  node-c:
+    image: mongo:6.0.1
+    container_name: node-c
+    command: mongod --port 27017 --shardsvr --replSet rs-shard-1
+    volumes:
+      - ./scripts:/scripts
+      - ./data/mongodb/node-c/db:/data/db:rw
+      - ./data/mongodb/node-c/configdb:/data/configdb:rw
+    ports:
+      - 27124:27017

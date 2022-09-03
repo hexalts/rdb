@@ -1,25 +1,9 @@
 import { NestFactory } from '@nestjs/core';
-import { Transport, MicroserviceOptions } from '@nestjs/microservices';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
-  const hostname = process.env.BROKER_HOSTNAME;
-  const port = parseInt(process.env.BROKER_PORT);
-  const username = process.env.BROKER_USERNAME;
-  const password = process.env.BROKER_PASSWORD;
-  const app = await NestFactory.createMicroservice<MicroserviceOptions>(
-    AppModule,
-    {
-      transport: Transport.MQTT,
-      options: {
-        hostname: hostname,
-        port: port,
-        protocol: 'wss',
-        username: username,
-        password: password,
-      },
-    },
-  );
-  app.listen();
+  const app = await NestFactory.create(AppModule);
+  await app.listen(3001);
+  console.log(`Application is running on: ${await app.getUrl()}`);
 }
 bootstrap();
