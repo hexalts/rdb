@@ -11,10 +11,12 @@ const port = process.env.DB_PORT || 27017;
 const protocol = process.env.DB_PROTOCOL || 'mongodb';
 const args = process.env.DB_ARGS || '';
 
+const mongoConnectionUrl = `${protocol}://${hostname}:${port}?${args}`;
+
 @Injectable()
 export class MongodbService {
   constructor(@Inject('COMMUNICATOR') private readonly client: ClientProxy) {}
-  public mongo = new MongoClient(`${protocol}://${hostname}:${port}?${args}`);
+  public mongo = new MongoClient(mongoConnectionUrl);
   getHello(): string {
     return 'Hello World!';
   }
@@ -31,7 +33,7 @@ export class MongodbService {
   public async onModuleInit(): Promise<void> {
     try {
       await this.mongo.connect();
-      Logger.log('Connection initialized', 'MongoDB');
+      Logger.log(`Connection initialized to ${mongoConnectionUrl}`, 'MongoDB');
       this.mongo
         .watch([], { fullDocument: 'updateLookup' })
         .on('change', (change) => {
