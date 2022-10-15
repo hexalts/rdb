@@ -69,6 +69,7 @@ export class MongodbService {
             default: {
               Logger.error(
                 `Operator "${change.operationType}" is not handled yet. You may raise this as a new issue via GitHub`,
+                'MongoDB',
               );
               return;
             }

@@ -4,6 +4,7 @@
     "declaration": true,
     "removeComments": true,
     "emitDecoratorMetadata": true,
+    "moduleResolution": "NodeNext",
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
     "target": "es2017",

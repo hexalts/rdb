@@ -1,14 +1,7 @@
-export interface QueryProps {
-  field: string;
-  operator: '==' | '<=' | '>=' | '<' | '>' | '!=';
-  value: string | number | boolean;
-}
+import { ChangeStream } from 'src/types/changeStream';
 
-export interface PayloadProps {
-  type: 'start' | 'reply' | 'end' | 'changeStream' | 'error';
+export interface PayloadProps extends ChangeStream {
   operation: OperationTypes | 'error';
-  query: QueryProps[];
-  payload: Record<string, unknown> | [];
 }
 
 export type OperationTypes =
