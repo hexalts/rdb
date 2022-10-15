@@ -8,7 +8,7 @@ export interface PayloadProps {
   type: 'start' | 'reply' | 'end' | 'changeStream' | 'error';
   operation: OperationTypes | 'error';
   query: QueryProps[];
-  payload: {} | [];
+  payload: Record<string, unknown> | [];
 }
 
 export type OperationTypes =

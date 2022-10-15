@@ -7,8 +7,7 @@ import { MongodbService } from './mongodb.service';
   imports: [
     ClientsModule.register([
       {
-        name: "COMMUNICATOR",
-        // @ts-ignore next-line
+        name: 'COMMUNICATOR',
         transport: Transport.MQTT,
         options: {
           url: 'ws://localhost:9001',

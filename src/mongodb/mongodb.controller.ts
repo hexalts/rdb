@@ -70,7 +70,7 @@ export class MongodbController {
         // cast to object since it must be an object typed variable.
         // mongodb should throw error if the $set payload is not
         // an object.
-        $set: payload as {},
+        $set: payload as Record<string, unknown>,
       });
       return response;
     } catch (error) {
