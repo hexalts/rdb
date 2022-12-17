@@ -1,6 +1,5 @@
 import {
   Controller,
-  Get,
   Post,
   Body,
   Put,
@@ -38,7 +37,7 @@ export class MongodbController {
     }
   }
 
-  @Get('get/:db/:coll')
+  @Post('get/:db/:coll')
   async get(
     @Body()
     body: PayloadProps,
